@@ -24,7 +24,7 @@
                     </x-nav-link>
                 </div>
                   <!-- Products Links -->
-                  @role('seller')
+                  @role('seller|admin')
                   <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('products.index')" :active="request()->routeIs('products')">
                         {{ __('Products') }}

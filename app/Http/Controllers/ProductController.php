@@ -8,6 +8,7 @@ use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class ProductController extends Controller
 {
@@ -16,7 +17,15 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products=Product::where('seller_id','=',Auth::id())->paginate(10);
+
+        Gate::authorize('viewAny',Product::class);
+       if(Auth::user()->hasRole('admin')) {
+            $products=Product::paginate(10);
+        }
+        else{
+            $products=Product::where('seller_id','=',Auth::id())->paginate(10);
+        }
+
 
         return view('product.index', compact('products'));
     }
@@ -66,7 +75,11 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        if($product->seller_id == Auth::id()){
+            dd('hi');
+        }
+        abort(403);
+
     }
 
     /**
@@ -74,7 +87,10 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request, Product $product)
     {
-        //
+        if(Auth::user()->hasRole('admin') || $product->seller_id == Auth::id()){
+            dd('hi');
+        }
+        abort(403);
     }
 
     /**

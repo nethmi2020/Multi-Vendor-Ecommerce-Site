@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\GoogleLoginController;
 use Illuminate\Support\Facades\Route;
 
 Route::resource('categories', CategoryController::class)->middleware('auth');
@@ -24,8 +25,11 @@ Route::middleware('auth')->group(function () {
 
 });
 
-Route::group(['middleware' => ['auth','role:seller']], function () {
+Route::group(['middleware' => ['auth', 'role:seller|admin']], function () {
     Route::resource('products', ProductController::class);
 });
 
 require __DIR__.'/auth.php';
+
+Route::get('/login/google', [GoogleLoginController::class, 'redirectToGoogle'])->name('auth.google');
+Route::get('/login/google/callback', [GoogleLoginController::class, 'handleGoogleCallback']);

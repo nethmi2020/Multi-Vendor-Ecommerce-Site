@@ -5,6 +5,7 @@ namespace App\Policies;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
+use Illuminate\Support\Facades\Auth;
 
 class ProductPolicy
 {
@@ -13,7 +14,13 @@ class ProductPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        if(Auth::user()->hasRole('admin') || Auth::user()->hasRole('seller')) {
+            return true;
+        }
+        else{
+            return false;
+        }
+
     }
 
     /**
@@ -29,7 +36,12 @@ class ProductPolicy
      */
     public function create(User $user): bool
     {
-        //
+        // if(Auth::user()->hasRole('admin') || Auth::user()->hasRole('seller')) {
+        //     return true;
+        // }
+        // else{
+        //     return false;
+        // }
     }
 
     /**

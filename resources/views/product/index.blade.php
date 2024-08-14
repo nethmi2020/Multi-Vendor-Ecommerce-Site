@@ -28,8 +28,10 @@
                                         {{-- <th scope="col" class="py-3 pl-4 pr-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">No</th> --}}
 
 									<th scope="col" class="py-3 pl-4 pr-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">Category</th>
-									<th scope="col" class="py-3 pl-4 pr-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">Seller</th>
-									<th scope="col" class="py-3 pl-4 pr-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">Name</th>
+									@role('admin')
+                                     <th scope="col" class="py-3 pl-4 pr-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">Seller</th>
+									@endrole
+                                    <th scope="col" class="py-3 pl-4 pr-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">Name</th>
 									<th scope="col" class="py-3 pl-4 pr-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">Description</th>
 									<th scope="col" class="py-3 pl-4 pr-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">Price</th>
 									<th scope="col" class="py-3 pl-4 pr-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">Quantity</th>
@@ -43,8 +45,10 @@
                                             {{-- <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-semibold text-gray-900">{{ ++$i }}</td> --}}
 
 										<td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $product->category->name }}</td>
-										<td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $product->seller->name }}</td>
-										<td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $product->name }}</td>
+                                        @role('admin')
+                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $product->seller->name }}</td>
+										@endrole
+                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $product->name }}</td>
 										<td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $product->description }}</td>
 										<td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ number_format($product->price,2) }}</td>
 										<td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $product->qty }}</td>
