@@ -32,6 +32,8 @@ class GoogleLoginController extends Controller
             $newUser->password = bcrypt(request(Str::random())); // Set some random password
             $newUser->save();
 
+            // $newUser->assignRole('buyer');
+
             // Log in the new user.
             auth()->login($newUser, true);
         }
