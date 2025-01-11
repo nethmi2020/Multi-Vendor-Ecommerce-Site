@@ -21,6 +21,7 @@
                  <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('categories.index')" :active="request()->routeIs('categories')">
                         {{ __('Categories') }}
+                    <span class="bg-gray-600 p-1 rounded-full text-white ml-2"> {{$categories_count}}</span>
                     </x-nav-link>
                 </div>
                   <!-- Products Links -->
@@ -28,10 +29,16 @@
                   <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('products.index')" :active="request()->routeIs('products')">
                         {{ __('Products') }}
+                        <span class="bg-gray-600 p-1 rounded-full text-white ml-2"> </span>
                     </x-nav-link>
                 </div>
                 @endrole
 
+            </div>
+            <div class="flex item-center gap-4 justify-end">
+                <a href="{{url('change_language/si')}}">Sinhala</a>
+                <a href="{{url('change_language/en')}}">English</a>
+                <p class="bg-red-400 p-3 rounded">Selected :{{Session::get('language')}}</p>
             </div>
 
             <!-- Settings Dropdown -->

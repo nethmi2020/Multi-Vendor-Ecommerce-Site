@@ -15,7 +15,10 @@
                             <p class="mt-2 text-sm text-gray-700">A list of all the {{ __('Products') }}.</p>
                         </div>
                         <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-                            <a type="button" href="{{ route('products.create') }}" class="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Add new</a>
+                            <a type="button" href="{{ route('products.create') }}" class="block rounded-md bg-blue-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">Add new</a>
+                        </div>
+                        <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
+                            <a type="button" href="{{ route('products.export') }}" class="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Products Export </a>
                         </div>
                     </div>
 
@@ -26,7 +29,7 @@
                                     <thead>
                                     <tr>
                                         {{-- <th scope="col" class="py-3 pl-4 pr-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">No</th> --}}
-
+                                        <th scope="col" class="py-3 pl-4 pr-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">Image</th>
 									<th scope="col" class="py-3 pl-4 pr-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">Category</th>
 									@role('admin')
                                      <th scope="col" class="py-3 pl-4 pr-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">Seller</th>
@@ -43,7 +46,7 @@
                                     @foreach ($products as $product)
                                         <tr class="even:bg-gray-50">
                                             {{-- <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-semibold text-gray-900">{{ ++$i }}</td> --}}
-
+                                        <td class="w-24"><img src="{{ $product->image() }}" alt=""></td>
 										<td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $product->category->name }}</td>
                                         @role('admin')
                                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $product->seller->name }}</td>
@@ -55,8 +58,13 @@
 
                                             <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900">
                                                 <form action="{{ route('products.destroy', $product->id) }}" method="POST">
+                                                    {{-- <a href="{{ route('products.show', Crypt::encrypt($product->id)) }}" class="text-gray-600 font-bold hover:text-gray-900 mr-2">{{ __('Show') }}</a> --}}
                                                     <a href="{{ route('products.show', $product->id) }}" class="text-gray-600 font-bold hover:text-gray-900 mr-2">{{ __('Show') }}</a>
+                                                    @if($product->seller_id == Auth::id())
                                                     <a href="{{ route('products.edit', $product->id) }}" class="text-indigo-600 font-bold hover:text-indigo-900  mr-2">{{ __('Edit') }}</a>
+                                                    @else
+                                                    <span class="text-gray-400 font-bold mr-2 cursor-not-allowed">{{ __('Edit') }}</span>
+                                                    @endif
                                                     @csrf
                                                     @method('DELETE')
                                                     <a href="{{ route('products.destroy', $product->id) }}" class="text-red-600 font-bold hover:text-red-900" onclick="event.preventDefault(); confirm('Are you sure to delete?') ? this.closest('form').submit() : false;">{{ __('Delete') }}</a>
@@ -78,3 +86,12 @@
         </div>
     </div>
 </x-app-layout>
+
+
+
+                                <?php echo $variable; ?>
+
+
+
+
+

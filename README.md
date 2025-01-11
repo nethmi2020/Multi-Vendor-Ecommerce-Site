@@ -68,6 +68,11 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 <!-- username:nethmiwelgamvila@gmail.com
       password:password -->
-<!-- category--seller -->
+<!-- category--seller 
+https://dashboard.pusher.com/apps/1856371/getting_started
+-->
 
-<!-- 7-30 video 0.37.33 >
+<!--  
+8-2 -  can start
+
+product delete, confirmation dialog box has not been loaded properly

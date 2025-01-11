@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-
+use Illuminate\Support\Facades\Auth;
 class UpdateProductRequest extends FormRequest
 {
     /**
@@ -11,7 +11,11 @@ class UpdateProductRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+
+        $product = $this->route('product');
+
+        return Auth::user()->hasRole('admin') || $product->seller_id == Auth::id();
+
     }
 
     /**

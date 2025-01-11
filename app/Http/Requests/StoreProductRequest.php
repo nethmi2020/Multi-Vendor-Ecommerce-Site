@@ -21,13 +21,13 @@ class StoreProductRequest extends FormRequest
      */
     public function rules(): array
     {
-        // return [
-        //     'category_id' => 'required',
-        //     'name'        => 'required',
-        //     'description' => 'required',
-        //     'price'       => 'required',
-        //     'qty'         =>   'required',
-        //     'image'       => 'required',
-        // ];
+        return [
+            'category_id' => 'required',
+            'name'        => 'required',
+            'description' => 'required',
+            'price'       => 'required',
+            'qty'         =>  'required',
+            'image'       => 'required|image|mimes:jpg,bmp,png',
+        ];
     }
 }

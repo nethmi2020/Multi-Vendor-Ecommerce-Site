@@ -9,7 +9,7 @@ use App\Http\Requests\CategoryRequest;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
-
+use  App\Jobs\TestJob;
 
 class CategoryController extends Controller
 {
@@ -19,19 +19,26 @@ class CategoryController extends Controller
     public function index(Request $request)
     {
         // $user=Auth::user();
+        // // $user->removeRole('admin');
+        // // $roles=$user->getRoleNames();
+        // dd($user->hasRole('seller'));
+        // abort('403');
+        // TestJob::dispatch('hello');
+        // app()->setlocale('si');
+        // $user=Auth::user();
         // Auth::user()->assignRole('seller');
         // Auth::user()->removeRole('seller');
         // dd(Auth::user()->getRoleNames());
-        if(Auth::user()->hasRole('seller')){
+        // if(Auth::user()->hasRole('seller')){
             $categories = Category::paginate();
 
             return view('category.index', compact('categories'))
                 ->with('i', ($request->input('page', 1) - 1) * $categories->perPage());
-        }
-        else
-        {
-            return redirect(route('dashboard'));
-        }
+        // }
+        // else
+        // {
+        //     return redirect(route('dashboard'));
+        // }
 
 
 

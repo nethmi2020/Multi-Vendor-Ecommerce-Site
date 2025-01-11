@@ -50,5 +50,20 @@
                     </a>
                 </div>
             </div>
+
+            
+            <div class="block mt-4">
+                <div class="flex items-center justify-end mt-4">
+                    <a href="{{ route('auth.facebook') }}" style="display: flex; border: 0.5px solid rgb(177, 213, 236) ; padding:2px">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" 
+                             alt="Login with Facebook" 
+                             width="40" 
+                             style="vertical-align: middle;">
+                        <span style="margin-left: 10px; font-size: 16px; color: #ffffff; font-weight: bold; background-color: #1877F2; padding: 10px 20px; border-radius: 5px; display: inline-block;">
+                            Login with Facebook
+                        </span>
+                    </a>
+                </div>
+            </div>
     </form>
 </x-guest-layout>

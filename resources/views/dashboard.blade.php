@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
+            {{ __('dash.Dashboard') }}
         </h2>
     </x-slot>
 
@@ -9,7 +9,7 @@
 
         <div class="flex max-w-7xl mx-auto sm:px-6 lg:px-8 gap-4">
 
-
+            {{evercodeHelperTest('nethmi')}}
             @role('admin|seller|buyer')
             <div class="bg-red-300 overflow-hidden shadow-sm sm:rounded-lg w-full ">
                 <div class="p-6 text-gray-900">
