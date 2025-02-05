@@ -89,7 +89,7 @@
 
 
 
-                                <?php echo $variable; ?>
+                                
 
 
 

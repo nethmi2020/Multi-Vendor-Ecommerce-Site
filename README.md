@@ -73,6 +73,7 @@ https://dashboard.pusher.com/apps/1856371/getting_started
 -->
 
 <!--  
-8-2 -  can start
+2024-8-9  -----------------  1:12:13   
 
 product delete, confirmation dialog box has not been loaded properly
++++    

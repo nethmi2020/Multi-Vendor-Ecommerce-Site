@@ -77,4 +77,18 @@ class SiteController extends Controller
     //    dd($product);
        return view('api-shop-single',compact('product'));
     }
+
+    public function removeCart(Product $product)
+    {
+        // Session::forget('cart');
+        $cart=(Session::has('cart')) ? Session::get('cart') :[];
+        
+        if(isset($cart[$product->id]))
+        {
+            $cart[$product->id]['qty'] -=1;
+        }
+        
+        Session::put('cart',$cart);
+        return redirect(route('shop'));
+    }
 }

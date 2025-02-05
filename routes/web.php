@@ -29,6 +29,7 @@ Route::get('/api_shop',[SiteController::class, 'apiIndex'])->name('api-shop');
 Route::get('/api_shop/{id}',[SiteController::class, 'apiShow'])->name('api-show');
 Route::get('/shop',[SiteController::class, 'index'])->name('shop');
 Route::get('/add_to_cart/{product}',[SiteController::class, 'addToCart'])->name('product.add_to_cart');
+Route::get('/remove_cart/{product}',[SiteController::class, 'removeCart'])->name('product.remove_cart');
 Route::get('/cart',[SiteController::class, 'cart'])->name('cart');
 Route::get('/change_language/{language}',[SiteController::class, 'changeLanguage'])->name('change_language');
 

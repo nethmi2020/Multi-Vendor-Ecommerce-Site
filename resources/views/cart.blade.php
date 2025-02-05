@@ -24,6 +24,7 @@
                                               @endphp
 
                                               @forelse ($cart as $cartItem)
+
                                               @php
                                                   $total += $cartItem['product']->price * $cartItem['qty'];
                                               @endphp

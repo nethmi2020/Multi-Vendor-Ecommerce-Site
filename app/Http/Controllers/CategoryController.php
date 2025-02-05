@@ -61,6 +61,19 @@ class CategoryController extends Controller
     {
         Category::create($request->validated());
 
+        $category = new Category();
+
+        $category->name = $request->name;
+        $category->description = $request->description;
+      
+
+        $path = null;
+        if ($request->file('image')) {
+            $path = $request->file('image')->store('category');
+        }
+        $category->category_image = $path;
+        $category->save();
+
         return Redirect::route('categories.index')
             ->with('success', 'Category created successfully.');
     }
@@ -90,8 +103,19 @@ class CategoryController extends Controller
      */
     public function update(CategoryRequest $request, Category $category): RedirectResponse
     {
-        $category->update($request->validated());
+        // $category->update($request->validated());
 
+        $category->name = $request->name;
+        $category->description = $request->description;
+      
+      
+        if ($request->hasFile('image')) {
+            if ($category->category_image) {
+                \Storage::delete($category->category_image);
+            }
+            $category->category_image = $request->file('image')->store('category');
+        }
+        $category->save();
         return Redirect::route('categories.index')
             ->with('success', 'Category updated successfully');
     }

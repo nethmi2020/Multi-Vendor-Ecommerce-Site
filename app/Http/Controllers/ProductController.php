@@ -2,18 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
-use App\Models\Category;
+use App\Exports\ProductsExport;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Models\Category;
+use App\Models\Product;
 use App\Trait\TestTrait;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
-use Maatwebsite\Excel\Facades\Excel;
-use App\Exports\ProductsExport;
-use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ProductController extends Controller
 {
@@ -24,14 +22,12 @@ class ProductController extends Controller
     public function index()
     {
         // dd($this->tt(1,2));
-        Gate::authorize('viewAny',Product::class);
-       if(Auth::user()->hasRole('admin')) {
-            $products=Product::paginate(10);
+        Gate::authorize('viewAny', Product::class);
+        if (Auth::user()->hasRole('admin')) {
+            $products = Product::paginate(10);
+        } else {
+            $products = Product::where('seller_id', '=', Auth::id())->paginate(10);
         }
-        else{
-            $products=Product::where('seller_id','=',Auth::id())->paginate(10);
-        }
-
 
         return view('product.index', compact('products'));
     }
@@ -42,8 +38,8 @@ class ProductController extends Controller
     public function create()
     {
         $product = new Product();
-        $categories = Category::all()->pluck('name','id');
-        return view('product.create', compact('product','categories'));
+        $categories = Category::all()->pluck('name', 'id');
+        return view('product.create', compact('product', 'categories'));
     }
 
     /**
@@ -52,22 +48,22 @@ class ProductController extends Controller
     public function store(StoreProductRequest $request)
     {
 
-        $product=new Product();
+        $product = new Product();
 
-         $product->seller_id   =  Auth::id();
-         $product->category_id =  $request->category_id;
-         $product->name        =  $request->name;
-         $product->description =  $request->description;
-         $product->price       =  $request->price;
-         $product->qty         =  $request->qty;
+        $product->seller_id = Auth::id();
+        $product->category_id = $request->category_id;
+        $product->name = $request->name;
+        $product->description = $request->description;
+        $product->price = $request->price;
+        $product->qty = $request->qty;
 
-        $path=NULL;
-        if($request->file('image')){
-            $path=$request->file('image')->store('products');
+        $path = null;
+        if ($request->file('image')) {
+            $path = $request->file('image')->store('products');
         }
-        $product->image  =  $path;
+        $product->image = $path;
         $product->save();
-         return redirect(route('products.index'))
+        return redirect(route('products.index'))
             ->with('success', 'Product created successfully.');
 
     }
@@ -75,7 +71,7 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show( $id)
+    public function show($id)
     {
 
         $product = Product::find($id);
@@ -89,10 +85,10 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = Product::find($id);
-        $categories=Category::all();
-        if($product->seller_id == Auth::id()){
+        $categories = Category::all();
+        if ($product->seller_id == Auth::id()) {
 
-            return view('product.edit', compact('product','categories'));
+            return view('product.edit', compact('product', 'categories'));
         }
 
         abort(403);
@@ -110,19 +106,18 @@ class ProductController extends Controller
         // echo '</pre>';
         // die();
 
-        $product->category_id=$request->category_id;
-        $product->seller_id=$product->seller_id;
-        $product->name=$request->name;
-        $product->description=$request->description;
-        $product->price=$request->price;
-        $product->qty=$request->qty;
+        $product->category_id = $request->category_id;
+        $product->seller_id = $product->seller_id;
+        $product->name = $request->name;
+        $product->description = $request->description;
+        $product->price = $request->price;
+        $product->qty = $request->qty;
 
-
-        if($request->hasFile('image')){
-            if($product->image){
+        if ($request->hasFile('image')) {
+            if ($product->image) {
                 \Storage::delete($product->image);
             }
-            $product->image=$request->file('image')->store('products');
+            $product->image = $request->file('image')->store('products');
         }
 
         $product->save();
@@ -136,21 +131,21 @@ class ProductController extends Controller
     public function destroy($id)
     {
 
-       $product=Product::find($id);
+        $product = Product::find($id);
 
-       if(!$product){
-        return redirect()->route('product.index')
-        ->with('error','Product Not Found');
-       }
+        if (!$product) {
+            return redirect()->route('product.index')
+                ->with('error', 'Product Not Found');
+        }
 
-        if($product->seller_id == Auth::id()){
+        if ($product->seller_id == Auth::id()) {
             Product::find($id)->delete();
             return redirect()->route('products.index')
-            ->with('success', 'Product deleted successfully');
+                ->with('success', 'Product deleted successfully');
         }
 
         return redirect()->route('products.index')
-        ->with('Error', 'Unauthorized');
+            ->with('Error', 'Unauthorized');
 
     }
 
@@ -159,5 +154,4 @@ class ProductController extends Controller
         return Excel::download(new ProductsExport, 'products.xlsx');
     }
 
-   
 }
