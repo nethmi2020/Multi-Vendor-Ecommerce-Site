@@ -42,7 +42,8 @@
                                                     <div class="flex items-center">
                                                         <button class="border rounded-md py-2 px-4 mr-2">-</button>
                                                         <span class="text-center w-8">{{$cartItem['qty']}}</span>
-                                                        <button class="border rounded-md py-2 px-4 ml-2">+</button>
+                                                        <button class="border rounded-md py-2 px-4 ml-2 add_item" data-id="{{$cartItem['product']->id}}">+</button>
+                                                        
                                                     </div>
                                                 </td>
                                                 <td class="py-4">{{  number_format($cartItem['product']->price * $cartItem['qty'] , 2) }}</td>
@@ -83,3 +84,29 @@
         </div>
     </div>
 </x-site-layout>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+     $(document).ready(function () {
+        $('.add_item').on('click', function(){
+            var  productId = $(this).data('id'); 
+            console.log(productId);
+            $.ajax({
+                url: "{{ url('/add_to_cart') }}/" +productId, // Replace with your actual route
+                type: "GET",
+                data: {
+                    _token: "{{ csrf_token() }}", // CSRF token for security
+                    product_id: productId
+                },
+                success: function (response) {
+                    alert('Item added to cart successfully');
+                  
+                },
+                error: function (xhr) {
+                    alert('Error adding item to cart');
+                    console.error(xhr.responseText);
+                }
+            });
+});
+});
+</script>
